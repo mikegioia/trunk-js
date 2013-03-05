@@ -1,0 +1,17 @@
+# set your config language below
+#
+app/web/lang/english.js
+
+# do not edit these two
+#
+app/web/config/constants.js
+app/web/config/config.js
+app/web/config/templates.js
+
+# add your custom libraries
+#
+
+
+# add your custom pages
+#
+app/web/pages/home.js
