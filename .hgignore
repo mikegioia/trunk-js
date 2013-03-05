@@ -4,5 +4,6 @@
 
 syntax: glob
 .DS_Store
+.gitignore
 *.orig
 js/sys/build/*.js

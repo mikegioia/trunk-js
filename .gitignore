@@ -1,7 +1,0 @@
-js/sys/build/*.js
-*~
-*.orig
-.DS_Store
-.DS_Store?
-.project
-.settings
