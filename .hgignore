@@ -1,0 +1,9 @@
+/*~$
+^\.htaccess$
+^\.project$
+deploy/config
+
+syntax: glob
+.DS_Store
+*.orig
+js/sys/build/*.js

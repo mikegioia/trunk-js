@@ -25,7 +25,8 @@ var ModalClass = Base.extend({
         scaleToImage: false,
         maxWidth: 800,
         closeTours: true,
-        theme: null
+        theme: null,
+        callback: null
     },
     
     // add modal selections
@@ -89,10 +90,10 @@ var ModalClass = Base.extend({
         //    App.Log.debug( 'Modal already displayed, ignoring request' );
         //    return false;
         //}
-                
+
         // extend the options if we have anything here
         //
-        if ( typeof options == "undefined" ) {
+        if ( _.isUndefined( options ) ) {
             options = {};
         }
 
@@ -110,11 +111,7 @@ var ModalClass = Base.extend({
 
         // display the overlay
         //
-        displayOverlay = ( typeof displayOverlay == "undefined" )
-            ? true
-            : displayOverlay;
-            
-        if ( displayOverlay ) {
+        if ( options.displayOverlay ) {
             this.$eltModalOverlay.show().fadeTo( 0, 0.6 );
         }
         
@@ -221,10 +218,16 @@ var ModalClass = Base.extend({
             this.$eltModal.addClass( options.sizeClass );
         }
 
+        // check if we have a callback after the modal is rendered
+        //
+        if ( options.callback && _.isFunction( options.callback ) ) {
+            options.callback();
+        }
+
         // resize and reposition the modal
         //
         var self = this;
-        this.repositionModal( true );
+        this.repositionModal( true, options.callback );
 
         Mousetrap.bind( [ 'escape' ], function(e) {
             if ( self.$eltModal.is( ':visible' ) ) {
@@ -356,10 +359,13 @@ var ModalClass = Base.extend({
         Mousetrap.unbind( [ 'escape' ] );
     },
     
-    repositionModal: function( /* show */ ) {
+    repositionModal: function( /* show, callback */ ) {
         var show = ( arguments.length > 0 )
             ? arguments[ 0 ]
             : false;
+        var callback = ( arguments.length > 1 )
+            ? arguments[ 1 ]
+            : null;
             
         if ( show ) {
             this.$eltModal.show();
@@ -402,8 +408,14 @@ var ModalClass = Base.extend({
             });
         }
 
-        this.$eltModal.css( { 'top' : ( windowHeight / 2 ) - ( height / 2 ), 
-                              'left' : ( windowWidth / 2 ) - ( width / 2 ) } );
+        this.$eltModal.css({ 
+            'top' : ( windowHeight / 2 ) - ( height / 2 ), 
+            'left' : ( windowWidth / 2 ) - ( width / 2 ) 
+        });
+
+        if ( _.isFunction( callback ) ) {
+            callback();
+        }
     },
 
     resize: function ( width ) {

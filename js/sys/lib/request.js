@@ -43,7 +43,7 @@ var RequestClass = Base.extend({
         },
         setStatus: true,
         statusMessage: null,
-        expire_notification: false
+        expire_notification: true
     },
     
     // initialize the ajax/request library
@@ -59,6 +59,10 @@ var RequestClass = Base.extend({
                 self.localStorageEnabled = Modernizr.localstorage;
                 self.sendStoredRequests();
             }
+
+            // change default notification expiration
+            //
+            self.defaults.expire_notification = App.Config.message_expire;
         });
         
         App.Log.debug( 'Request library loaded', 'sys' );
@@ -403,7 +407,7 @@ var RequestClass = Base.extend({
         formOptions.type = method;
         formOptions.data = data;
         formOptions.postSuccess = callback;
-        
+
         // if the URL starts with http:// then use it as is, otherwise add the url to
         // the base href and use that as the string
         //
@@ -411,6 +415,11 @@ var RequestClass = Base.extend({
         var expression = /([hH][tT][tT][pP]|[hH][tT][tT][pP][sS]):\/\/(([A-Za-z0-9\.-])+(:[0-9]+)?\.[A-Za-z]{2,5}|((\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})(:[0-9]+)?))/;
         var regex = new RegExp( expression );
         //var urlRegex = /^(http:\/\/www.|https:\/\/www.|ftp:\/\/www.|www.){1}([\w]+)(.[\w]+){1,2}$/;
+
+        if ( _.isUndefined( url ) || ! url.length ) {
+            App.Log.error( "Attempted ajaxCall on an empty URL" );
+            return false;
+        }
 
         if ( url.match( regex ) ) {
             formOptions.url = url;
