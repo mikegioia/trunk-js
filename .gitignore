@@ -1,7 +1,6 @@
 js/sys/build/*.js
 *~
 *.orig
-deploy/config
 .DS_Store
 .DS_Store?
 .project

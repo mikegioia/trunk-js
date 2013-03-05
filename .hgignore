@@ -1,7 +1,6 @@
 /*~$
 ^\.htaccess$
 ^\.project$
-deploy/config
 
 syntax: glob
 .DS_Store
