@@ -43,7 +43,7 @@ var ConstClass = Base.extend({
     request_local_storage: false,
     request_local_wait_ms: 5000,
 
-    highlight_fg_color: '#F9E659'
+    highlight_fg_color: '#fced8a'
     
 });
 
