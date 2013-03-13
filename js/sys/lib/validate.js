@@ -88,9 +88,6 @@ var ValidateClass = Base.extend({
         // after a label if it's a checkbox/label combo.
         //
         vOptions.errorPlacement = function( error, element ) {
-            // Confirm with MG whether to notify in addition to add labels - users are overlooking 
-            // error labels on validation
-            // 
             if ( element.next().prop( 'tagName' ) == 'LABEL' ) {
                 error.insertAfter( element.next() );
             }
@@ -100,8 +97,15 @@ var ValidateClass = Base.extend({
         };
 
         vOptions.showErrors = function ( errorMap, errorList ) {
+            // we don't want to show more than 1 of these at a time
+            //
             if ( errorList.length > 0 ) {
-                App.Message.notify( "Oops! Something on the form isn't valid." );    
+                App.Message.notify( 
+                    App.Lang.validate_bad_form,
+                    App.Const.status_error,
+                    {
+                        key: 'validate'
+                    });
             }
             
             this.defaultShowErrors();

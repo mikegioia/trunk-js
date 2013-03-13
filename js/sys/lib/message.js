@@ -499,41 +499,70 @@ var MessageClass = Base.extend({
     
     // display growl-type notification to the user
     //
-    notify: function( /* msg, type, decode, expire, allowClose */ ) {
+    notify: function( /* msg, type, decode || options, expire, allowClose */ ) {
         var msg = ( arguments.length > 0 )
             ? arguments[ 0 ]
             : App.Lang.error_default;
         var type = ( arguments.length > 1 )
             ? arguments[ 1 ]
             : App.Const.status_error;
-        var decode = ( arguments.length > 2 )
-            ? arguments[ 2 ]
-            : false
-        var expire = ( arguments.length > 3 )
-            ? arguments[ 3 ]
-            : null
-        var allowClose = ( arguments.length > 4 )
-            ? arguments[ 4 ]
-            : true;
+        var defaults = {
+            decode: false,
+            expire: null,
+            allowClose: true,
+            key: ''
+        };
 
-        if ( decode == true ) {
+        if ( arguments.length > 2 && _.isObject( arguments[ 2 ] ) ) {
+            var options = _.extend( {}, defaults, arguments[ 2 ] );
+        }
+        else {
+            var decode = ( arguments.length > 2 )
+                ? arguments[ 2 ]
+                : false
+            var expire = ( arguments.length > 3 )
+                ? arguments[ 3 ]
+                : null
+            var allowClose = ( arguments.length > 4 )
+                ? arguments[ 4 ]
+                : true;
+            var options = {
+                decode: decode,
+                expire: expire,
+                allowClose: allowClose
+            };
+            options = _.extend( {}, defaults, options );
+        }
+
+        if ( options.decode == true ) {
             msg = App.Util.urldecode( msg );
+        }
+
+        // check if a key came in. if so, we don't want to display another message with
+        // the same key (if one is currently open).
+        //
+        if ( options.key.length ) {
+            if ( $( '.aj-notif.aj-key-' + options.key + ':visible' ).length ) {
+                App.Log.info( 
+                    'Not creating new notification. Key:' + options.key + ' already exists.' );
+                return false;
+            }
         }
         
         App.Log.info( 'Creating new notification with type: ' + type + ', and message: ' + msg );
         
         var msgCount = this.$eltNotifications.find( '.aj-notif' ).length;
-        var msgId = 'aj-notif-' + (msgCount + 1);
-        
+        var msgId = 'aj-notif-' + ( msgCount + 1 );
+
         // create a new notification
         //
         if ( App.Config.message_notif_location == 'top' ) {
             jQuery( '<div/>', {
                 'id': msgId,
-                'class': 'aj-notif hidden aj-status-' + type
+                'class': 'aj-notif hidden aj-key-' + options.key + ' aj-status-' + type
             }).prependTo( this.$eltNotifications );
 
-            if ( allowClose ) {
+            if ( options.allowClose ) {
                 jQuery( '<a/>', {
                     'class': 'aj-close',
                     'href' : 'javascript:;'
@@ -550,7 +579,7 @@ var MessageClass = Base.extend({
                 'class': 'aj-notif hidden aj-status-' + type
             }).appendTo( this.$eltNotifications );
 
-            if ( allowClose ) {
+            if ( options.allowClose ) {
                 jQuery( '<a/>', {
                     'class': 'aj-close',
                     'href' : 'javascript:;'
@@ -571,7 +600,7 @@ var MessageClass = Base.extend({
             $( '#' + msgId ).show();
         }
         
-        if ( expire === true || ( expire === null && App.Config.message_expire ) ) {
+        if ( options.expire === true || ( options.expire === null && App.Config.message_expire ) ) {
             if ( App.Config.message_notif_animate ) {
                 var t = setTimeout( "$('#" + msgId + "').fadeOut()", App.Config.message_expire_length );
             }
