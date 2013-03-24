@@ -30,6 +30,11 @@ var PageClass = Base.extend({
             return false;
         }
 
+        if ( ! _.isNumber( numTimes ) || numTimes <= 0 ) {
+            App.Log.debug( "Page highlight failed on non-positive integer numTimes: " + numTimes );
+            return false;
+        }
+
         // get the default background color
         //
         if ( $item.css( 'background-color' ) == 'none' ) {
@@ -115,7 +120,7 @@ var PageClass = Base.extend({
             topPadding: 0,
             elementToHighlight: null,
             scrollTime: 'auto',
-            highlightCount: 1
+            highlightCount: null
         };
         var options = ( arguments.length > 1 )
             ? arguments[ 1 ]
@@ -137,6 +142,14 @@ var PageClass = Base.extend({
                 : options.scrollTime;
 
         $( window ).scrollTo( moveTo, scrollTime );
+
+        // if highlightCount is non-null, and elementToHighlight is null, then
+        // use $item as the elementToHighlight.
+        //
+        if ( _.isNumber( options.highlightCount ) && 
+            _.isNull( options.elementToHighlight ) ) {
+            options.elementToHighlight = $item;
+        }
 
         if ( options.elementToHighlight !== null ) {
             var self = this;
