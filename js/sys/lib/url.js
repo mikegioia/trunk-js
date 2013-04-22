@@ -189,9 +189,9 @@ var UrlClass = Base.extend({
 
     // get a query parameter by name
     //
-    function getParameterByName( name )
-    {
+    getParameterByName: function( name ) {
         name = name.replace( /[\[]/, "\\\[").replace(/[\]]/, "\\\]" );
+        
         var regexS = "[\\?&]" + name + "=([^&#]*)",
             regex = new RegExp( regexS ),
             results = regex.exec( window.location.search );
