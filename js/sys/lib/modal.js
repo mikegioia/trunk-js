@@ -98,6 +98,7 @@ var ModalClass = Base.extend({
         }
 
         options = $.extend( {}, this.options, options );
+        var buttonClasses = App.Config.modal_button_classes;
 
         // hide any tours that are open
         //
@@ -138,7 +139,7 @@ var ModalClass = Base.extend({
         //
         if ( options.cancelButton ) {
             jQuery( '<a/>', {
-                'class' : 'aj-close aj-button left red',
+                'class' : 'aj-close aj-button left red ' + buttonClasses,
                 'href' : 'javascript:;',
                 'text' : App.Lang.cancel
             }).appendTo( this.$eltModal.find( '.aj-buttons' ) );
@@ -158,7 +159,8 @@ var ModalClass = Base.extend({
                 var button = options.buttons[ i ];
                 
                 jQuery( '<a/>', {
-                    'class' : 'aj-button aj-button-callback',
+                    'class' : 'aj-button aj-button-callback blue ' + 
+                        button.classes + ' ' + buttonClasses,
                     'href' : 'javascript:;',
                     'text' : button.text,
                     'id' : 'aj-modal-button-' + i
@@ -293,23 +295,29 @@ var ModalClass = Base.extend({
                             htmlString: response.data.html,
                             headerText: response.data.header
                         }, 
-                        options
-                    );
+                        options );
                     self.show( options );
                     callback( response );
                 }
-            }
-        );
+            });
     },
     
     // adds a button with a callback to the modal
     //
-    addButton: function( text, callback ) {
+    addButton: function( text, callback /*, options */ ) {
         text = text || App.Lang.submit;
-        this.options.buttons.push({
-            text: text,
-            callback: callback
-        });
+
+        var options = ( arguments.length > 2 )
+                ? arguments[ 2 ]
+                : {},
+            defaults = {
+                text: text,
+                callback: callback,
+                classes: ''
+            };
+
+        options = $.extend( {}, defaults, options );
+        this.options.buttons.push( options );
     },
 
     // update the callback button
