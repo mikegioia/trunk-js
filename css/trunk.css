@@ -2,7 +2,7 @@
  * Trunk JavaScript Framework v1.0.0
  * http://trunkjs.com/
  *
- * Copyright 2012, Mike Gioia
+ * Copyright 2013, Mike Gioia
  * Licensed under the MIT license.
  * http://trunkjs.com/docs/license
  */
@@ -405,6 +405,7 @@
     border-bottom: 1px solid #333333;
     float: none;
     font-size: 22px;
+    font-weight: normal;
     margin: 0;
     padding: 0 0 10px;
     text-shadow: none;
