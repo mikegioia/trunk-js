@@ -185,6 +185,20 @@ var UrlClass = Base.extend({
         }
 
         window.location.hash = hash.join( '&' );
+    },
+
+    // get a query parameter by name
+    //
+    getParameterByName: function( name ) {
+        name = name.replace( /[\[]/, "\\\[").replace(/[\]]/, "\\\]" );
+        
+        var regexS = "[\\?&]" + name + "=([^&#]*)",
+            regex = new RegExp( regexS ),
+            results = regex.exec( window.location.search );
+
+        return ( results == null )
+            ? ""
+            : decodeURIComponent( results[ 1 ].replace( /\+/g, " " ) );
     }
 
 });
