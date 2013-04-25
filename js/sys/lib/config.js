@@ -45,7 +45,8 @@ var ConfigClass = Base.extend({
 
     // modal
     //
-    modal_theme: null                   // string
+    modal_theme: null,                  // string
+    modal_button_classes: ''            // string
     
 });
 
