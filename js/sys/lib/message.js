@@ -36,13 +36,15 @@ var MessageClass = Base.extend({
         
         // create the working element (this exists outside of the defer)
         //
-        jQuery( '<div/>', {
-            id: 'aj-working'
-        }).appendTo( 'body' );
-        jQuery( '<span/>' ).appendTo( '#aj-working' );
-        jQuery( '<div/>', {
-            id: 'aj-working-overlay'
-        }).appendTo( 'body' );
+        if ( ! $( '#aj-working' ).length ) {
+            jQuery( '<div/>', {
+                id: 'aj-working'
+            }).appendTo( 'body' );
+            jQuery( '<span/>' ).appendTo( '#aj-working' );
+            jQuery( '<div/>', {
+                id: 'aj-working-overlay'
+            }).appendTo( 'body' );
+        }
 
         this.$eltWorking = $( '#aj-working' );
         this.$eltWorkingOverlay = $( '#aj-working-overlay' );
@@ -559,7 +561,8 @@ var MessageClass = Base.extend({
         if ( App.Config.message_notif_location == 'top' ) {
             jQuery( '<div/>', {
                 'id': msgId,
-                'class': 'aj-notif hidden aj-key-' + options.key + ' aj-status-' + type
+                'style': 'display:none;',
+                'class': 'aj-notif aj-key-' + options.key + ' aj-status-' + type
             }).prependTo( this.$eltNotifications );
 
             if ( options.allowClose ) {
@@ -576,7 +579,8 @@ var MessageClass = Base.extend({
         else {
             jQuery( '<div/>', {
                 'id': msgId,
-                'class': 'aj-notif hidden aj-status-' + type
+                'style': 'display:none;',
+                'class': 'aj-notif aj-status-' + type
             }).appendTo( this.$eltNotifications );
 
             if ( options.allowClose ) {

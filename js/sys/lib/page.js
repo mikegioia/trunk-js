@@ -18,7 +18,7 @@ var PageClass = Base.extend({
         this.scrollTo( 'top' );
     },
 
-    // miscellaneous page methods
+    // highlight an element on the page
     //
     highlight: function( selector /* numTimes, fgColor, bgColor */ ) {
         var $item = ( _.isString( selector ) )
@@ -27,11 +27,6 @@ var PageClass = Base.extend({
 
         if ( ! $item.length ) {
             App.Log.debug( "Page highlight failed on selector: " + selector );
-            return false;
-        }
-
-        if ( ! _.isNumber( numTimes ) || numTimes <= 0 ) {
-            App.Log.debug( "Page highlight failed on non-positive integer numTimes: " + numTimes );
             return false;
         }
 
@@ -54,6 +49,11 @@ var PageClass = Base.extend({
             ? arguments[ 3 ]
             : defaultBg;
 
+        if ( ! _.isNumber( numTimes ) || numTimes <= 0 ) {
+            App.Log.debug( "Page highlight failed on non-positive integer numTimes: " + numTimes );
+            return false;
+        }
+        
         if ( ! bgColor ) {
             bgColor = $item.css( 'background-color' );
         }
