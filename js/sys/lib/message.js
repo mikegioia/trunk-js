@@ -36,13 +36,15 @@ var MessageClass = Base.extend({
         
         // create the working element (this exists outside of the defer)
         //
-        jQuery( '<div/>', {
-            id: 'aj-working'
-        }).appendTo( 'body' );
-        jQuery( '<span/>' ).appendTo( '#aj-working' );
-        jQuery( '<div/>', {
-            id: 'aj-working-overlay'
-        }).appendTo( 'body' );
+        if ( ! $( '#aj-working' ).length ) {
+            jQuery( '<div/>', {
+                id: 'aj-working'
+            }).appendTo( 'body' );
+            jQuery( '<span/>' ).appendTo( '#aj-working' );
+            jQuery( '<div/>', {
+                id: 'aj-working-overlay'
+            }).appendTo( 'body' );
+        }
 
         this.$eltWorking = $( '#aj-working' );
         this.$eltWorkingOverlay = $( '#aj-working-overlay' );

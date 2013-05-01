@@ -222,14 +222,14 @@ var ModalClass = Base.extend({
 
         // check if we have a callback after the modal is rendered
         //
-        if ( options.callback && _.isFunction( options.callback ) ) {
-            options.callback();
-        }
+        callback = ( options.callback && _.isFunction( options.callback ) )
+            ? options.callback
+            : function() {};
 
         // resize and reposition the modal
         //
         var self = this;
-        this.repositionModal( true, options.callback );
+        this.repositionModal( true, callback );
 
         Mousetrap.bind( [ 'escape' ], function(e) {
             if ( self.$eltModal.is( ':visible' ) ) {
