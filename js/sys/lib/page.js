@@ -30,11 +30,6 @@ var PageClass = Base.extend({
             return false;
         }
 
-        if ( ! _.isNumber( numTimes ) || numTimes <= 0 ) {
-            App.Log.debug( "Page highlight failed on non-positive integer numTimes: " + numTimes );
-            return false;
-        }
-
         // get the default background color
         //
         if ( $item.css( 'background-color' ) == 'none' ) {
@@ -54,6 +49,11 @@ var PageClass = Base.extend({
             ? arguments[ 3 ]
             : defaultBg;
 
+        if ( ! _.isNumber( numTimes ) || numTimes <= 0 ) {
+            App.Log.debug( "Page highlight failed on non-positive integer numTimes: " + numTimes );
+            return false;
+        }
+        
         if ( ! bgColor ) {
             bgColor = $item.css( 'background-color' );
         }
