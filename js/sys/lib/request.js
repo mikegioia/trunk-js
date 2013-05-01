@@ -118,8 +118,6 @@ var RequestClass = Base.extend({
         };
         
         options.success = function( response, status, xhr, jqForm ) {
-            App.Log.info( 'Completed ajax request with status: ' + App.Util.json_encode( status ) );
-
             // set up defaults if we didn't get something in the response
             //
             response = ( response ) ? response : {};
@@ -129,6 +127,10 @@ var RequestClass = Base.extend({
             response.message = ( ! _.isUndefined( response.message ) && response.message != null )
                 ? response.message
                 : '';
+
+            App.Log.info( 
+                'Completed ajax request with status: ' + 
+                App.Util.json_encode( response.status ));
 
             // process any hooks if there are any
             //
