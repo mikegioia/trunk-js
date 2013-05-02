@@ -24,6 +24,9 @@
     border-radius: 3px;
     outline: none;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
+    box-shadow: 0 2px 0px #004E72;
+    -webkit-box-shadow: 0 2px 0px #004E72;
+    -moz-box-shadow: 0 2px 0px #004E72;
 }
 .aj-button:hover {
     color: #eee;
@@ -47,9 +50,9 @@
 .aj-button.red {
     color: #fff;
     background-color: #AF0D0B;
-    box-shadow: 0 2px 0px #811311;
-    -webkitbox-shadow: 0 2px 0px #811311;
-    -moz-box-shadow: 0 2px 0px #811311;
+    box-shadow: 0 2px 0px #570D0C;
+    -webkitbox-shadow: 0 2px 0px #570D0C;
+    -moz-box-shadow: 0 2px 0px #570D0C;
 }
 .aj-button.green {
     color: #fff;
@@ -116,7 +119,7 @@
     font-size: 28px;
     padding: 15px;
     position: fixed;
-    z-index: 10000;
+    z-index: 10005;
     border-bottom: 1px solid #888;
     border-top: 1px solid #000;
     background: #111 url( '../images/trunk/loader-gear.gif' ) 14px 20px no-repeat;
@@ -132,7 +135,7 @@
     width: 100%;
     height: 100%;
     background-color: #000;
-    z-index: 9999;
+    z-index: 10004;
     display: none;
 }
 
