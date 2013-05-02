@@ -43,7 +43,8 @@ var RequestClass = Base.extend({
         },
         setStatus: true,
         statusMessage: null,
-        expire_notification: true
+        expireNotification: true,
+        redirectLast: false
     },
     
     // initialize the ajax/request library
@@ -62,7 +63,7 @@ var RequestClass = Base.extend({
 
             // change default notification expiration
             //
-            self.defaults.expire_notification = App.Config.message_expire;
+            self.defaults.expireNotification = App.Config.message_expire;
         });
         
         App.Log.debug( 'Request library loaded', 'sys' );
@@ -149,13 +150,18 @@ var RequestClass = Base.extend({
 
             // handle the response
             //
+            var redirectFunction = null;
+
             if ( ! _.isUndefined( response.redirect ) && response.redirect != null && response.redirect.length ) {
-                App.Message.setStatus(
-                    App.Lang.redirecting, 
-                    'request'
-                );
-                window.location = response.redirect;
-                return;
+                redirectFunction = function() {
+                    App.Message.setStatus( App.Lang.redirecting, 'request' );
+                    window.location = response.redirect;
+                    return;
+                };
+            }
+
+            if ( _.isFunction( redirectFunction ) && ! options.redirectLast ) {
+                return redirectFunction();
             }
           
             if ( ! _.isUndefined( response.status ) ) {
@@ -171,7 +177,7 @@ var RequestClass = Base.extend({
                             response.message, 
                             App.Const.status_error, 
                             false, 
-                            options.expire_notification );
+                            options.expireNotification );
                     }
                     else {
                         App.Message.notify( 
@@ -193,7 +199,7 @@ var RequestClass = Base.extend({
                             response.message, 
                             App.Const.status_success,
                             false,
-                            options.expire_notification );
+                            options.expireNotification );
                     }
                 }
                 else if ( response.status == App.Const.status_info && response.message.length ) {
@@ -201,7 +207,7 @@ var RequestClass = Base.extend({
                         response.message, 
                         App.Const.status_info,
                         false,
-                        options.expire_notification );
+                        options.expireNotification );
                     
                     if ( ! successCallback( response, status, xhr, jqForm ) ) {
                         if ( options.setStatus ) {
@@ -239,6 +245,10 @@ var RequestClass = Base.extend({
             }
             
             postSuccessCallback( response, status, xhr, jqForm );
+
+            if ( _.isFunction( redirectFunction ) && options.redirectLast ) {
+                return redirectFunction();
+            }
         };
         
         if ( _.isUndefined( options.error ) || ! options.error ) {
@@ -262,7 +272,7 @@ var RequestClass = Base.extend({
                                     App.Lang.request_local_storage_enabled, 
                                     App.Const.status_info,
                                     false,
-                                    options.expire_notification
+                                    options.expireNotification
                                 );
                             }
                             
@@ -287,7 +297,7 @@ var RequestClass = Base.extend({
                                     App.Lang.request_local_storage_disabled, 
                                     App.Const.status_error,
                                     false,
-                                    options.expire_notification
+                                    options.expireNotification
                                 );
                             }
                             
