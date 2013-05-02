@@ -90,19 +90,23 @@ var RequestClass = Base.extend({
         var self = this,
             options = _.extend( {}, this.defaults, formOptions );
 
-        var successCallback = ( ! _.isUndefined( formOptions.onSuccess ) )
+        var successCallback = ( ! _.isUndefined( formOptions.onSuccess ) 
+            && _.isFunction( formOptions.onSuccess ))
             ? formOptions.onSuccess
             : function() { return true; };
             
-        var postSuccessCallback = ( ! _.isUndefined( formOptions.postSuccess ) )
+        var postSuccessCallback = ( ! _.isUndefined( formOptions.postSuccess ) 
+            && _.isFunction( formOptions.postSuccess ))
             ? formOptions.postSuccess
             : function() { return true; };
             
-        var errorCallback = ( ! _.isUndefined( formOptions.onError ) )
+        var errorCallback = ( ! _.isUndefined( formOptions.onError ) 
+            && _.isFunction( formOptions.onError ))
             ? formOptions.onError
             : function() { return true; };
             
-        var beforeSendCallback = ( ! _.isUndefined( formOptions.beforeSend ) )
+        var beforeSendCallback = ( ! _.isUndefined( formOptions.beforeSend )
+            && _.isFunction( formOptions.beforeSend ))
             ? formOptions.beforeSend
             : function() { return true; };
 
