@@ -48,7 +48,9 @@ var ConfigClass = Base.extend({
     modal_theme: null,                  // string
     modal_button_classes: '',           // string
     modal_positioning: 'top',           // 'middle' or 'top'
-    modal_positioning_top_px: 50        // integer
+    modal_positioning_top_px: 50,       // integer
+    modal_content_classes: '',          // string
+    modal_hide_html_scrollbar: false    // bool
     
 });
 
