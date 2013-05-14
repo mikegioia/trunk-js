@@ -214,6 +214,13 @@ var ModalClass = Base.extend({
             this.$eltModal.addClass( options.sizeClass );
         }
 
+        // check for content classes
+        //
+        if ( App.Config.modal_content_classes ) {
+            this.$eltModal.find( '.aj-modal-content' ).addClass( 
+                App.Config.modal_content_classes );
+        }
+
         // check if we have a callback after the modal is rendered
         //
         callback = ( options.callback && _.isFunction( options.callback ) )
@@ -230,6 +237,14 @@ var ModalClass = Base.extend({
             ( App.Config.effect_animate )
                 ? this.$eltModalOverlay.fadeTo( 200, 0.6 )
                 : this.$eltModalOverlay.show().fadeTo( 0, 0.6 );
+        }
+
+        // hide the html scrollbar if specified
+        //
+        if ( App.Config.modal_hide_html_scrollbar ) {
+            $( 'html' ).css({
+                'overflow' : 'hidden'
+            });
         }
 
         this.repositionModal( true, callback );
@@ -352,6 +367,14 @@ var ModalClass = Base.extend({
             }
         }
 
+        // show the html scrollbar if specified
+        //
+        if ( App.Config.modal_hide_html_scrollbar ) {
+            $( 'html' ).css({
+                'overflow' : 'auto'
+            });
+        }
+
         this.$eltModal.attr( 'class', '' );
         this.$eltModal.removeAttr( 'style' );
         
@@ -377,6 +400,7 @@ var ModalClass = Base.extend({
     },
     
     repositionModal: function( /* show, callback */ ) {
+
         var show = ( arguments.length > 0 )
             ? arguments[ 0 ]
             : false;
@@ -405,20 +429,26 @@ var ModalClass = Base.extend({
             width = this.$eltModal.outerWidth() * ratio,
             windowWidth = $( window ).width() * ratio;
 
-        this.$eltModal.hide();
+        if ( show ) {
+            this.$eltModal.hide();
+        }
 
         // the modal height needs to be aware of the screen height. we can display
         // the modal up until it hits a specified padding inside the window.
         // once the height is too tall for the window, we need to set an overflow
         // scroll to the content area.
         //
-        if ( height > windowHeight - 20 ) {
+        if ( height > windowHeight - ( App.Config.modal_positioning_top_px ) ) {
             var fixedHeight = height - contentHeight,
-                newHeight = windowHeight - 20;
+                newHeight = windowHeight - 27;
             var newContentHeight = newHeight - fixedHeight;
             
             this.$eltModal.find( '.aj-modal-content' ).css({
                 'height' : newContentHeight
+            });
+            this.$eltModal.css({ 
+                'top' : 10, 
+                'left' : ( windowWidth / 2 ) - ( width / 2 ) 
             });
             
             height = newHeight;
@@ -436,11 +466,13 @@ var ModalClass = Base.extend({
             });
         }
 
-        if ( show && App.Config.effect_animate ) {
-            this.$eltModal.fadeIn( 'fast' );
-        }
-        else {
-            this.$eltModal.show(); 
+        if ( show ) {
+            if ( App.Config.effect_animate ) {
+                this.$eltModal.fadeIn( 'fast' );
+            }
+            else {
+                this.$eltModal.show(); 
+            }
         }
 
         if ( _.isFunction( callback ) ) {
