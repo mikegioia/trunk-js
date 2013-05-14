@@ -46,7 +46,9 @@ var ConfigClass = Base.extend({
     // modal
     //
     modal_theme: null,                  // string
-    modal_button_classes: ''            // string
+    modal_button_classes: '',           // string
+    modal_positioning: 'top',           // 'middle' or 'top'
+    modal_positioning_top_px: 50        // integer
     
 });
 
