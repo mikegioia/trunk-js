@@ -223,7 +223,7 @@ var ModalClass = Base.extend({
 
         // check if we have a callback after the modal is rendered
         //
-        callback = ( options.callback && _.isFunction( options.callback ) )
+        var callback = ( options.callback && _.isFunction( options.callback ) )
             ? options.callback
             : function() {};
 
