@@ -483,10 +483,20 @@ var TourClass = Base.extend({
             //
             $tour.find( '.aj-tour-arrow' ).remove();
 
-            $tour.css({ 
-                top: targetTop - offsetTop + topPad, 
-                left: targetLeft + offsetLeft + leftPad
-            });
+            if ( App.Config.effect_animate === true ) {
+                $tour.animate(
+                    {
+                        top: targetTop - offsetTop + topPad, 
+                        left: targetLeft + offsetLeft + leftPad
+                    },
+                    250 );
+            }
+            else {
+                $tour.css({ 
+                    top: targetTop - offsetTop + topPad, 
+                    left: targetLeft + offsetLeft + leftPad
+                });
+            }
 
             if ( target && $target.length && $target.is( ':visible' ) ) {
                 var $arrowImg = $( "<div/>", {
@@ -566,6 +576,10 @@ var TourClass = Base.extend({
         // remove left/right nav
         //
         $( 'body' ).off( 'keydown.tourNav' );
+
+        // trigger finish event
+        //
+        $( 'body' ).trigger( 'tourClosed' );
         
         return true;
     },
