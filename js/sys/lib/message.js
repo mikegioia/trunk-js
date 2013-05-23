@@ -606,7 +606,9 @@ var MessageClass = Base.extend({
         
         if ( options.expire === true || ( options.expire === null && App.Config.message_expire ) ) {
             if ( App.Config.message_notif_animate ) {
-                var t = setTimeout( "$('#" + msgId + "').fadeOut()", App.Config.message_expire_length );
+                var t = setTimeout( 
+                    "$('#" + msgId + "').fadeOut( '250', function() { $( this ).remove(); })", 
+                    App.Config.message_expire_length );
             }
             else {
                 var t = setTimeout( "$('#" + msgId + "').remove()", App.Config.message_expire_length );
@@ -807,8 +809,8 @@ var MessageClass = Base.extend({
     setWorking: function( msg ) {
         // display the overlay
         //
-        this.$eltWorkingOverlay.show().fadeTo( 0, 0.8 );
-        
+        this.$eltWorkingOverlay.show();
+
         // set the working content
         //
         msg = msg || App.Lang.working;
@@ -820,7 +822,7 @@ var MessageClass = Base.extend({
     // removes the working dialog
     //
     unsetWorking: function() {
-        this.$eltWorkingOverlay.hide();
+        this.$eltWorkingOverlay.fadeOut();
         this.$eltWorking.hide();
         this.$eltWorking.find( 'span' ).html( '' );
     },
