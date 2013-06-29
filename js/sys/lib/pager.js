@@ -293,7 +293,9 @@ var PagerClass = Base.extend({
             : selector;
         
         if ( $container.length > 1 || ! $container.length ) {
-            App.Log.error( 'Pager reset() attempted to reset pagination on a selector of length: ' + $container.length )
+            App.Log.error( 
+                'Pager reset() attempted to reset pagination on a selector of length: ' +
+                $container.length )
             return false;
         }
         
@@ -399,12 +401,14 @@ var PagerClass = Base.extend({
 
         // add the total results
         //
-        var context = ( parseInt( options.offset ) + 1 ) + 
-                      ' - ' +
-                      Math.min( parseInt( options.offset ) + parseInt( options.pageLen ), options.count ) +
-                      ' of ' +
-                      App.Util.add_commas( options.count );
-        $( '#' + options.pagerId ).append( '<span class="context">' + context + '</span>' );
+        var context = 
+            ( parseInt( options.offset ) + 1 ) + 
+            ' - ' +
+            Math.min( parseInt( options.offset ) + parseInt( options.pageLen ), options.count ) +
+            ' of ' +
+            App.Util.add_commas( options.count );
+        $( '#' + options.pagerId )
+            .append( '<span class="context">' + context + '</span>' );
         
         // set up click handler for links
         //
@@ -508,6 +512,7 @@ var PagerClass = Base.extend({
                 // just set the html of the container
                 //
                 var $container = $( '#' + options.containerId );
+
                 if ( $container.is( "table" ) ) {
                     if ( $container.data( 'tbodys' ) ) {
                         $container.find( 'tbody' ).remove();
@@ -623,6 +628,10 @@ var PagerClass = Base.extend({
                 //
                 callback( options );
 
+                // trigger the pager updated on the container for anything listening
+                //
+                $container.trigger( 'pager_updated' );
+
                 return true;
             }, {
                 onError: function() {
@@ -689,7 +698,8 @@ var PagerClass = Base.extend({
                     break;
                     
                 case 'select':
-                    var $filter = self.createHeaderSelect( filterName, filterValue, filterPlaceholder );
+                    var $filter = self.createHeaderSelect( 
+                        filterName, filterValue, filterPlaceholder );
                     $node.append( $filter );
                     break;
 
@@ -818,7 +828,9 @@ var PagerClass = Base.extend({
             }
             else {
                 $div.addClass( 'active' )
-                    .find( 'a' ).html( $( this ).find( 'option[value="' + val + '"]' ).text() );
+                    .find( 'a' )
+                    .html( 
+                        $( this ).find( 'option[value="' + val + '"]' ).text() );
             }
 
             pagerOptions.offset = 0;
