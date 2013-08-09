@@ -75,7 +75,7 @@ var PageClass = Base.extend({
 
             setTimeout( function() {
                 clearInterval( intervalId )
-            }, numTimes * 300 );
+            }, ( numTimes - 1 ) * 300 );
         }
 
         return true;
@@ -87,8 +87,8 @@ var PageClass = Base.extend({
         var reservedWords = [ 'top', 'bottom' ],
             moveTo = null;
 
-        if ( _.isString( selector ) &&
-             App.Util.in_array( selector, reservedWords ) ) {
+        if ( _.isString( selector )
+            && App.Util.in_array( selector, reservedWords ) ) {
             var $item = $( 'body' );
             
             if ( selector === 'top' ) {
@@ -146,8 +146,8 @@ var PageClass = Base.extend({
         // if highlightCount is non-null, and elementToHighlight is null, then
         // use $item as the elementToHighlight.
         //
-        if ( _.isNumber( options.highlightCount ) && 
-            _.isNull( options.elementToHighlight ) ) {
+        if ( _.isNumber( options.highlightCount )
+            && _.isNull( options.elementToHighlight ) ) {
             options.elementToHighlight = $item;
         }
 
