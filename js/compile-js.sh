@@ -4,10 +4,6 @@
 #
 SUFFIX=${1:-""}
 
-#if [ -n SUFFIX ] ; then
-#    SUFFIX=".${SUFFIX}"
-#fi
-
 API_URL=http://closure-compiler.appspot.com/compile
 COMPILATION_LEVEL=SIMPLE_OPTIMIZATIONS
 DATEFORMAT=`date +"%d%m%y"`;
