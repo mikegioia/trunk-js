@@ -198,6 +198,7 @@ var AppClass = Base.extend({
     appPath: null,
     appComplete: false,
     benchTime: {},
+    build: null,
     callstack: {
         init: 0,
         sys: 0,
@@ -332,10 +333,13 @@ var AppClass = Base.extend({
         
         switch ( this.env ) {
         case 'production':
-            // load the packaged sys file
+            // load the packaged sys file. if a build was specified, load that file
             //
+            var buildSuffix = ( this.build )
+                ? "." + this.build
+                : "";
             this.callstack.init = 1;
-            this.load( this.sysPath + 'build/sys.js', cb );
+            this.load( this.sysPath + 'build/sys' + buildSuffix + '.js', cb );
             break;
             
         case 'development':
@@ -399,7 +403,7 @@ var AppClass = Base.extend({
         
         // set up on window load complete for working dialog
         //
-        $( window ).load( function() {
+        this.ready( function() {
             setTimeout( "App.Message.unsetWorking();", 500 );
         });
         
@@ -412,16 +416,18 @@ var AppClass = Base.extend({
         case 'production':
             // load the packaged app file
             //
+            var buildSuffix = ( this.build )
+                ? "." + this.build
+                : "";
             this.callstack.sys = 1;
-            this.load( this.sysPath + 'build/' + this.appEnv + '.js', cb );
+            this.load( this.sysPath + 'build/' + this.appEnv + buildSuffix + '.js', cb );
             break;
             
         case 'development':
-            this.callstack.sys = 13 + this.libraries.length + this.pages.length;
+            this.callstack.sys = 12 + this.libraries.length + this.pages.length;
             
             // load the system plugins
             //
-            this.load( this.sysPath + 'plugins/jquery.cycle.js', cb );
             this.load( this.sysPath + 'plugins/jquery.scrollTo.js', cb );
             this.load( this.sysPath + 'plugins/jquery.form.js', cb );
             this.load( this.sysPath + 'plugins/jquery.ui.js', cb );
