@@ -264,6 +264,8 @@ var ModalClass = Base.extend({
     //     url, callback
     //     url, data
     //     url, callback, data
+    //     url, data, options
+    //     url, callback, data, options
     //
     ajaxShow: function( url /*, callback, data, options */ ) {
         // make a request for the content and pass it into the show method

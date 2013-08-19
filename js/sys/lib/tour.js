@@ -307,7 +307,7 @@ var TourClass = Base.extend({
         var $tour = ( _.isString( selector ) ) 
             ? $( selector )
             : selector;
-        
+
         // hide the panels and set up the options
         //
         $tour.find( 'div' ).hide();
