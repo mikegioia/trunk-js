@@ -308,7 +308,7 @@ var ModalClass = Base.extend({
             url,
             data,
             function( response ) {
-                if ( response.status != App.Const.status_error ) {
+                if ( response.status === App.Const.status_success ) {
                     options = $.extend( 
                         {}, 
                         {
