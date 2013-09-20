@@ -106,7 +106,7 @@ var UrlClass = Base.extend({
             newParams = {};
 
         if ( arguments.length > 1 ) {
-            var value = arguments[ 2 ];
+            var value = arguments[ 1 ];
             newParams[ param ] = value;
         }
         else {
