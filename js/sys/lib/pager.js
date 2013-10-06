@@ -248,10 +248,10 @@ var PagerClass = Base.extend({
             containerId : 'aj-pager-elt-' + this.pageCounter,
             pagerId : 'aj-pager-' + this.pageCounter
         };
-        
+
         baseOptions = $.extend( {}, this.defaults, elementOptions );
         options = $.extend( {}, baseOptions, options );
-        
+
         // create the paging container
         //
         var $pager = jQuery( '<div/>', {
@@ -261,7 +261,7 @@ var PagerClass = Base.extend({
         
         $pager.insertAfter( $container );
         $pager.data( 'options', options );
-        
+
         // render the controls and links
         //
         this.render( options );
@@ -378,10 +378,11 @@ var PagerClass = Base.extend({
         $pager.off( 'click', 'a.aj-pager-change' );
 
         if ( firstPage >= lastPage ) {
+            $pager.hide();
             App.Message.unsetStatus( 'pagerRender' );
             return false;
         }
-        
+
         // iterate through the page numbers and create the page links
         //
         for ( var i = firstPage; i <= lastPage; i++ ) {
@@ -423,6 +424,8 @@ var PagerClass = Base.extend({
 
             self.update( pagerOptions );
         });
+
+        $pager.show();
         
         App.Message.unsetStatus( 'pagerRender' );
     },
