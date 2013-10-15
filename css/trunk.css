@@ -211,7 +211,7 @@
     padding: 15px;
     position: fixed;
     width: 480px;
-    z-index: 10000;
+    z-index: 10002;
     border-bottom: 1px solid #888;
     border-top: 1px solid #000;
 }
@@ -241,7 +241,7 @@
     width: 100%;
     height: 100%;
     background-color: #000;
-    z-index: 9999;
+    z-index: 10001;
     display: none;
 }
 
@@ -261,7 +261,7 @@
     padding: 15px;
     position: fixed;
     width: 480px;
-    z-index: 10000;
+    z-index: 10002;
     border-bottom: 1px solid #888;
     border-top: 1px solid #000;
 }
@@ -291,7 +291,7 @@
     width: 100%;
     height: 100%;
     background-color: #000;
-    z-index: 9999;
+    z-index: 10001;
     display: none;
 }
 
@@ -311,7 +311,7 @@
     padding: 15px;
     position: fixed;
     width: 480px;
-    z-index: 10000;
+    z-index: 10002;
     border-bottom: 1px solid #888;
     border-top: 1px solid #000;
 }
@@ -349,7 +349,7 @@
     width: 100%;
     height: 100%;
     background-color: #000;
-    z-index: 9999;
+    z-index: 10001;
     display: none;
 }
 
@@ -625,6 +625,15 @@ textarea.aj-validate-error {
     position: relative;
     background: #fff
 }
+.aj-th-filter.aj-size-small .aj-th-filter-field {
+    width: 40px;
+}
+.aj-th-filter.aj-size-medium .aj-th-filter-field{
+    width: 80px;
+}
+.aj-th-filter.aj-size-large .aj-th-filter-field{
+    width: 140px;
+}
 .aj-th-filter .aj-th-filter-select-wrap.active a {
     color: #333;
 }
@@ -647,6 +656,15 @@ textarea.aj-validate-error {
     margin-left: 60%;
     position: absolute;
     top: 5px;
+}
+.aj-th-filter.aj-size-small .aj-field-clear {
+    margin-left: 48px; 
+}
+.aj-th-filter.aj-size-medium .aj-field-clear {
+    margin-left: 88px; 
+}
+.aj-th-filter.aj-size-large .aj-field-clear {
+    margin-left: 148px; 
 }
 .aj-th-filter .aj-th-filter-sort {
     display: inline-block;

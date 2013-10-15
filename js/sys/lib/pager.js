@@ -664,6 +664,7 @@ var PagerClass = Base.extend({
             var isFiltered = $( this ).data( 'filter' ),
                 filterName = $( this ).data( 'filtername' ),
                 filterType = $( this ).data( 'filtertype' ),
+                filterSize = $( this ).data( 'filtersize' ),
                 filterPlaceholder = $( this ).data( 'filterplaceholder' ),
                 filterValue = $( this ).data( 'filtervalue' ),
                 isSorted = $( this ).data( 'sort' ),
@@ -676,9 +677,14 @@ var PagerClass = Base.extend({
                 // create the node 
                 //
                 headerCount++;
-                
+
+                // check if there's a size class
+                //
+                var sizeClass = ( filterSize )
+                    ? ' aj-size-' + filterSize
+                    : '';
                 var $node = jQuery( '<div/>', {
-                    'class' : 'aj-th-filter'
+                    'class' : 'aj-th-filter' + sizeClass
                 });
                 var $clear = jQuery( '<a/>', {
                     'class' : 'aj-field-clear aj-th-filter-clear',
