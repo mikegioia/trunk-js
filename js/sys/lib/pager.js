@@ -534,7 +534,7 @@ var PagerClass = Base.extend({
                 // scroll to the top of the container (plus some padding) if it's enabled
                 //
                 if ( options.scrollOnUpdate == true ) {
-                    var pos = Math.max( $container.position().top - 10 + options.scrollPad, 0 );
+                    var pos = Math.max( $container.offset().top - 10 + options.scrollPad, 0 );
                     $( 'body' ).scrollTo( pos, 250 );
                 }
 
