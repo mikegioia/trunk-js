@@ -522,13 +522,21 @@ var PagerClass = Base.extend({
                         $container.find( 'thead' ).after( response.data.html );
                     }
                     else {
-                        $container.find( 'tbody' ).html( response.data.html );
+                        if ( options.append ) {
+                            $container.find( 'tbody' ).append( response.data.html );
+                        }
+                        else {
+                            $container.find( 'tbody' ).html( response.data.html );
+                        }
                     }
                 }
                 else {
-                    ( options.append )
-                        ? $container.append( response.data.html )
-                        : $container.html( response.data.html );
+                    if ( options.append ) {
+                        $container.append( response.data.html );
+                    }
+                    else {
+                        $container.html( response.data.html );
+                    }
                 }
 
                 // scroll to the top of the container (plus some padding) if it's enabled
