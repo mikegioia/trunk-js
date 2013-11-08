@@ -310,7 +310,6 @@ var TourClass = Base.extend({
 
         // hide the panels and set up the options
         //
-        $tour.find( 'div' ).hide();
         var options = $tour.data( 'options' );
         
         var $step = $tour.find( 'div:eq(' + ( index - 1 ) + ')' ),
@@ -371,6 +370,7 @@ var TourClass = Base.extend({
 
             // show the tour and step for location calculations
             //
+            $tour.find( 'div' ).hide();
             $tour.show();
             $step.show();
             

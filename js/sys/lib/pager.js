@@ -516,13 +516,24 @@ var PagerClass = Base.extend({
                 //
                 var $container = $( '#' + options.containerId );
 
+                // if paging options came back, update them otherwise update with
+                // the options passed in.
+                //
+                if ( typeof response.pager !== "undefined" && response.pager ) {
+                    options.url = response.pager.pagingurl;
+                    options.type = response.pager.pagingtype;
+                    options.count = response.pager.pagingcount;
+                    options.pageLen = response.pager.paginglimit;
+                    options.offset = response.pager.pagingoffset;
+                }
+
                 if ( $container.is( "table" ) ) {
                     if ( $container.data( 'tbodys' ) ) {
                         $container.find( 'tbody' ).remove();
                         $container.find( 'thead' ).after( response.data.html );
                     }
                     else {
-                        if ( options.append ) {
+                        if ( options.append && parseInt( options.offset ) > 0 ) {
                             $container.find( 'tbody' ).append( response.data.html );
                         }
                         else {
@@ -531,7 +542,7 @@ var PagerClass = Base.extend({
                     }
                 }
                 else {
-                    if ( options.append ) {
+                    if ( options.append && parseInt( options.offset ) > 0 ) {
                         $container.append( response.data.html );
                     }
                     else {
@@ -544,17 +555,6 @@ var PagerClass = Base.extend({
                 if ( options.scrollOnUpdate == true ) {
                     var pos = Math.max( $container.offset().top - 10 + options.scrollPad, 0 );
                     $( 'body' ).scrollTo( pos, 250 );
-                }
-
-                // if paging options came back, update them otherwise update with
-                // the options passed in.
-                //
-                if ( typeof response.pager !== "undefined" && response.pager ) {
-                    options.url = response.pager.pagingurl;
-                    options.type = response.pager.pagingtype;
-                    options.count = response.pager.pagingcount;
-                    options.pageLen = response.pager.paginglimit;
-                    options.offset = response.pager.pagingoffset;
                 }
 
                 self.render( options );
@@ -890,7 +890,11 @@ var PagerClass = Base.extend({
             pagerOptions[ 'sort' ] = fieldName;
             pagerOptions.sortDir = direction;
             pagerOptions.filterData = self.getFilterData( options );
-            
+
+            if ( options[ 'type' ] == 'loadmore' ) {
+                pagerOptions.offset = 0;
+            }
+
             $( '#' + options.containerId + ' .aj-th-filter-sort' ).removeClass( 'on' );
             $( this ).removeClass( 'asc desc' ).addClass( direction ).addClass( 'on' );
 
